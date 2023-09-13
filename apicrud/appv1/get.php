@@ -329,6 +329,44 @@ $app->get('/v20/operacion/obtenerUsuario/{codigo}', function ($request) {
     return $json;
 });
 
+$app->get('/v20/operacion/eliminarusuario', function ($request) use ($app) {
+    require __DIR__ . '/../src/connect.php';
+
+    // Obtener el parámetro 'codigo' de la URL
+    $codigo = $request->getAttribute('codigo');
+    error_log("nuestro codigo: " . $codigo);
+
+    try {
+        $connMSSQL = getConnectionMSSQLv2();
+        
+        // Realiza la eliminación del usuario en la base de datos
+        $sql = "DELETE FROM public.ZIGMIE WHERE ZIGMIECOD = :codigo";
+        $stmt = $connMSSQL->prepare($sql);
+        $stmt->bindParam(':codigo', $codigo, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        // Verifica si se eliminó correctamente
+        if ($stmt->rowCount() > 0) {
+            $code = 200;
+            $message = 'Usuario eliminado con éxito';
+        } else {
+            $code = 404;
+            $message = 'Usuario no encontrado';
+        }
+
+        $detalle = array(
+            'resultado' => 'Eliminación de Usuario',
+        );
+
+        header("Content-Type: application/json; charset=utf-8");
+        $json = json_encode(array('code' => $code, 'status' => 'ok', 'message' => $message, 'data' => $detalle), JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION);
+    } catch (PDOException $e) {
+        header("Content-Type: application/json; charset=utf-8");
+        $json = json_encode(array('code' => 500, 'status' => 'error', 'message' => 'Error al eliminar usuario: ' . $e), JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION);
+    }
+    $connMSSQL = null;
+    return $json;
+});
 
 
 

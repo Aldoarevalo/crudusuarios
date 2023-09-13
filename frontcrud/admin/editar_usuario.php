@@ -127,6 +127,7 @@
                                     <div class="col-xl-2">
                                         <a href="../admin/lista_usuarios.php" class="btn btn-default btn-md" style="width: 100%;">Cancelar</a>
                                     </div>
+									
                                 </div>
                                 <br>
 								</form>

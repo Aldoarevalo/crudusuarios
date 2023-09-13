@@ -203,7 +203,7 @@ include '../include/footer.php';
     var codCliente	= '<?php echo $usu_00; ?>';
     if (localStorage.getItem('lstUsuariosJSON') === 'null' || localStorage.getItem('lstUsuariosJSON') === null ){
         localStorage.removeItem('lstUsuariosJSON');
-        localStorage.setItem('lstUsuariosJSON', JSON.stringify(<?php echo json_encode($solicitudJSON); ?>));
+        localStorage.setItem('lstUsuariosJSON', JSON.stringify(<?php echo json_encode($solicitudJSON);?>));
     }
 
 </script>

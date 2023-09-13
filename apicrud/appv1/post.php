@@ -916,7 +916,7 @@ $app->post('/v20/operacion/usuarios', function ($request) {
     } else {
         /*actualizar usuario */
 
-        if ($accion == "update") {
+        if ($accion == "delete") {
 
             $sql01 = "UPDATE  public.ZIGMIE SET ZIGMIENOM='" . $ZIGMIENOM . "', ZIGMIEAPE='" . $ZIGMIEAPE . "', ZIGMIEDOC='" . $ZIGMIEDOC . "', ZIGMIEFNA='" . $ZIGMIEFNA . "' , ZIGMIECOR='" . $ZIGMIECOR . "',  ZIGMIECEL='" . $ZIGMIECEL . "', ZIGMIEROL='" . $rol . "'
                     WHERE ZIGMIECOD=" . $codigo;

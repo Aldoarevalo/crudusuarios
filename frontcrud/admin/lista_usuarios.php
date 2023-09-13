@@ -2,26 +2,29 @@
 	require '../class/function/curl_api.php';
 	require '../class/function/function.php';
 	require '../class/session/session_system.php';
-
-	$headerTitle	= 'Lista Usuarios';
+	
+	$headerTitle    = 'Lista Usuarios';
 	$headerSubTitle = '';
+	
 	if ((isset($_GET['nombre']) && $_GET['nombre'] != '') || (isset($_GET['nroDocumento']) && $_GET['nroDocumento'] != '') || (isset($_GET['cmbPerfil']) && $_GET['cmbPerfil'] != '')) 
 	{
 		$dataJSON       = json_encode(
 			array(
-				'nombre'   	  => $_GET['nombre'],
+				'nombre'      => $_GET['nombre'],
 				'cmbPerfil'   => $_GET['cmbPerfil'],
 				'documento'   => $_GET['nroDocumento']
 			));
-		$solicitudJSON	= post_curl('operacion/busquedausuarios',$dataJSON);
-		$solicitudJSON     = json_decode($solicitudJSON, true);
-		$listaRoles = get_curl('operacion/roles');
+		$solicitudJSON  = post_curl('operacion/busquedausuarios', $dataJSON);
+		$solicitudJSON  = json_decode($solicitudJSON, true);
+		$listaRoles     = get_curl('operacion/roles');
 	}
+	
 	else
 	{
-		$solicitudJSON	= get_curl('operacion/usuarios');
-		$listaRoles = get_curl('operacion/roles');
+		$solicitudJSON = get_curl('operacion/usuarios');
+		$listaRoles    = get_curl('operacion/roles');
 	}
+	
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +32,14 @@
 		<?php
 			include '../include/header.php';
 		?>
+  <link href="../assets/plugins/toastr/build/toastr.min.css" rel="stylesheet">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+   
+   <!-- Enlaces a las librerías y estilos -->
+   
+   
+	   <script src="../assets/plugins/toastr/toastr.js"></script>
 	</head>
 
 	<body>
@@ -138,7 +148,8 @@
 												<th class="hidden-sm text-center">Correo</th>
 												<th class="hidden-sm text-center">Celular</th>
 												<th class="hidden-sm text-center">Rol</th>
-												<th class="hidden-sm text-center">Acción</th>
+												<th class="hidden-sm text-center">Modificar</th>
+												<th class="hidden-sm text-center">Eliminar</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -156,14 +167,16 @@
 												<td class="f-w-600 text-muted text-center"> <?php echo $value['celular']; ?></td>
 												<td class="f-w-600 text-muted text-center"> <?php echo $value['nombre_rol']; ?></td>
 												<td class="f-w-600 text-muted text-center">
-                                                        <?php if($value['codigo_rol']!="3"){?>
+                                                        <?php if($value['codigo_rol']!="0"){?>
 													<a href="../admin/editar_usuario.php?codigo=<?php echo $value['codigo'] ?>" rel="tooltip" title="Editar Usuario">
                                                         <i class="far fa-edit"></i>
                                                     </a>
-                                                        <?php } else{ ?>
-                                                    <a href="../admin/abm_usuarios.php?codigo=<?php echo $value['codigo'] ?>" rel="tooltip" title="Editar Datos de Aliado">
-                                                        <i class="fa fa-user-edit"></i>
-                                                    </a>
+													</td>
+													<td class="f-w-600 text-muted text-center">
+                                                    <button id="codigo" name="codigo" class="btn btn-danger eliminar-usuario" codigo="<?php echo $value['codigo']; ?>">Eliminar</button>
+
+                                                  
+                                          
                                                         <?php } ?>
 												</td>
 												
@@ -231,6 +244,42 @@
 			}
 			
 		</script>
-		
+		<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtén todos los botones con la clase "eliminar-usuario"
+    var buttons = document.querySelectorAll("#codigo");
+
+    // Agrega un controlador de eventos clic a cada botón
+    buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            // Obtén el código de usuario desde el atributo "data-codigo"
+            var codigo = this.getAttribute('codigo');
+            console.log(codigo);
+            // Confirma si realmente se desea eliminar el usuario
+            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                // Realiza la solicitud Fetch para eliminar el usuario
+                fetch('../class/crud/eliminarusuario.php?codigo=' + codigo, {
+                    method: 'GET', // Usa el método DELETE para indicar que deseas eliminar
+                })
+                .then(function (response) {
+                    if (response.ok) {
+                        // Eliminación exitosa
+                        alert('Usuario eliminado con éxito.');
+                        // Puedes realizar alguna acción adicional aquí si es necesario
+                    } else {
+                        // Manejar errores si la eliminación falla
+                        alert('Error al eliminar el usuario.');
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Error de red:', error);
+                });
+            }
+        });
+    });
+});
+
+</script>
+
 	</body>
 </html>
