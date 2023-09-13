@@ -266,6 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Eliminación exitosa
                         alert('Usuario eliminado con éxito.');
                         // Puedes realizar alguna acción adicional aquí si es necesario
+						window.location.href = 'lista_usuarios.php';
                     } else {
                         // Manejar errores si la eliminación falla
                         alert('Error al eliminar el usuario.');

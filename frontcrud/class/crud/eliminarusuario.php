@@ -22,12 +22,33 @@
         
     $result	= post_curl('operacion/eliminarusuario', $dataJSON);
 
-    $result                 = json_decode($result, true);
-    $msg                    = str_replace("\n", ' ', $result['message']);
+   
 
-    if ($result['code'] == 200) {
-        error_log($result);
+    if (!empty($result)) {
         header('Location: ../../admin/lista_usuarios.php');
+        $responseData = json_decode($result, true);
+        if ($responseData !== null) {
+        $code = isset($responseData['code']) ? $responseData['code'] : 'No se pudo obtener el código';
+
+              // Resto del código para manejar la respuesta
+        $response = array(
+            'code' => $code,
+            
+            
+        );
+        $jsonResponse = json_encode($response);
+        echo $jsonResponse; // Imprimir la respuesta JSON
+        error_log("JSON generado: " . $jsonResponse);
+        if ($code === 200) {
+            error_log("nuestro codigo desde la api: " . $code); 
+        header('Location: ../../admin/lista_usuarios.php');
+        
+        exit(); // Agregar esta línea
+    }
+    }
+     
+    
+    
     } else {
         header('Location: ../../admin/editar_usuario.php?codigo='.$codigo);
     }
