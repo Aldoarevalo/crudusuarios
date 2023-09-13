@@ -20,12 +20,13 @@
            
         ));
         
-    $result	= get_curl('operacion/eliminarusuario', $dataJSON);
+    $result	= post_curl('operacion/eliminarusuario', $dataJSON);
 
     $result                 = json_decode($result, true);
     $msg                    = str_replace("\n", ' ', $result['message']);
 
     if ($result['code'] == 200) {
+        error_log($result);
         header('Location: ../../admin/lista_usuarios.php');
     } else {
         header('Location: ../../admin/editar_usuario.php?codigo='.$codigo);

@@ -329,7 +329,7 @@ $app->get('/v20/operacion/obtenerUsuario/{codigo}', function ($request) {
     return $json;
 });
 
-$app->get('/v20/operacion/eliminarusuario', function ($request) use ($app) {
+$app->get('/v20/operacion/eliminarusuarios', function ($request) use ($app) {
     require __DIR__ . '/../src/connect.php';
 
     // Obtener el parámetro 'codigo' de la URL
