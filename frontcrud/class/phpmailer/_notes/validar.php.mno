@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_usuario" value="name:IDEN_REGI;datatype:int,name:EMPR_NOMB;datatype:string,name:NOMB;datatype:string,name:DIRE;datatype:string,name:CIUD;datatype:string,name:CODI;datatype:string,name:PAIS;datatype:string,name:TELE;datatype:string,name:FAXX;datatype:string,name:EMAI;datatype:string,name:ESTA_REGI;datatype:string,name:ESTA_BORR;datatype:string,name:RECI_NOTI;datatype:string,name:USER;datatype:string,name:PASS;datatype:string" />
+</info>

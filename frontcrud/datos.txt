@@ -1,0 +1,8 @@
+Nombre: Aldo, Correo: 1234, Edad: 36
+Nombre: Aldo, Correo: aldo@gmail.com, Edad: 36
+Nombre: Aldo, Correo: kk, Edad: 36
+Nombre: Aldosss, Correo: kk, Edad: 36
+Nombre: Aldo, Correo: aldo, Edad: 36
+Nombre: Aldoortiz, Correo: aldo, Edad: 36
+Nombre: primera , Correo: , Edad: 
+Nombre: primera , Correo: , Edad: 
